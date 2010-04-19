@@ -39,6 +39,7 @@ using namespace std;
 string execname;
 string infile;
 string outfile;
+bool noconvert;
 Io *io;
 
 // From getopt.h
@@ -60,6 +61,7 @@ void show_clihelp(bool error = false) {
 		printf("Usage: %s [option] <input.ics> [output.fits] ...\n\n", execname.c_str());
 		printf("  -v, --verb[=LEVEL]   Increase verbosity level or set it to LEVEL.\n"
 					 "  -q,                  Decrease verbosity level.\n"
+					 "  -n,                  Do not convert, but only analyze the file.\n"
 					 "  -h, --help           Display this help message.\n"
 					 "      --version        Display version information.\n\n");
 		printf("Report bugs to Tim van Werkhoven <T.I.M.vanWerkhoven@xs4all.nl>.\n");
@@ -77,13 +79,17 @@ int parse_args(int argc, char *argv[]) {
 		{NULL, 0, NULL, 0}
 	};
 	
-	while((r = getopt_long(argc, argv, "hvq", long_options, &option_index)) != EOF) {
+	while((r = getopt_long(argc, argv, "nhvq", long_options, &option_index)) != EOF) {
 		switch(r) {
 			case 0:
 				break;
 			case 'h':
 				show_clihelp(false);
 				exit(0);
+			case 'n':
+				noconvert=true;
+				io->setVerb(IO_MAXLEVEL);
+				break;
 			case 1:
 				show_version();
 				exit(0);
@@ -160,7 +166,7 @@ int main(int argc, char *argv[]) {
   
   // Print metadata
   io->msg(IO_XNFO, "Got data at %p, ndims: %d, dims:", buf, ndims);
-  io->msg(IO_XNFO | IO_NOID, "dim[0] = %d", dims[0]);
+  io->msg(IO_XNFO | IO_NOLF, "dim[0] = %d", dims[0]);
   for (int i=1; i<ndims; i++)
     io->msg(IO_XNFO | IO_NOID, ", dim[%d] = %d", i, dims[i]);
   io->msg(IO_XNFO | IO_NOID, "\n");
@@ -177,6 +183,9 @@ int main(int argc, char *argv[]) {
   }
 	
 	io->msg(IO_XNFO, "nelements = %ld", nelements);
+	
+	if (noconvert)
+		return 0;
 
 	io->msg(IO_INFO, "Saving file to '%s'.", outfile.c_str());
 	
