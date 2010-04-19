@@ -1,0 +1,5 @@
+Main Todo Items
+===============
+
+* Add support for more datatypes (currently only 16 bit unsigned)
+* Add metadata copying from ics to fits.

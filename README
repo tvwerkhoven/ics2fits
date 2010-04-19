@@ -1,0 +1,31 @@
+ics2fits - convert ics files to fits
+====================================
+
+This is ics2fits, a simple script to convert ics files to the fits format. To
+do this, it utilizes the ics and cfitsio library, this is merely a wrapper
+around those two libraries for convenience. 
+
+ics2fits is free software, you can redistribute it and/or modify it under
+the terms of the GNU General Public License.
+
+The GNU General Public License does not permit this software to be
+redistributed in proprietary programs.
+
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Availability
+============
+
+ics2fits is available at github from <http://github.com/tvwerkhoven/ics2fits>
+
+Installation
+============
+
+ics2fits tries to follow the standard GNU installation procedure.  Please 
+consult the INSTALL file in this distribution for more detailed 
+instructions.
+
+For information about specific platforms and compilers see the
+INSTALL file.
